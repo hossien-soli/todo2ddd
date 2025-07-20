@@ -1,0 +1,6 @@
+
+To prevent class duplication in different modules, we centralize shared classes and types that are used across all modules.
+Placing a reusable class inside a single module and importing it elsewhere(another module)
+ would violate module encapsulation principles.
+
+This common package exists outside the project's individual modules.
