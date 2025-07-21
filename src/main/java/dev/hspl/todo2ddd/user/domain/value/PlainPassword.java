@@ -1,6 +1,6 @@
-package dev.hspl.todo2ddd.user.application.value;
+package dev.hspl.todo2ddd.user.domain.value;
 
-import dev.hspl.todo2ddd.user.application.exception.UnacceptablePlainPasswordException;
+import dev.hspl.todo2ddd.user.domain.exception.UnacceptablePlainPasswordException;
 
 public record PlainPassword(String value) {
     public PlainPassword {

@@ -2,14 +2,14 @@ package dev.hspl.todo2ddd.user.domain.exception;
 
 import dev.hspl.todo2ddd.common.domain.exception.DomainException;
 
-public class InvalidUserInfoException extends DomainException {
-    public InvalidUserInfoException() {
-        super("The username and hashed password of the user are not provided correctly.");
+public class MissingProtectedPasswordException extends DomainException {
+    public MissingProtectedPasswordException() {
+        super("Protected password not provided.");
     }
 
     @Override
     public String problemKey() {
-        return "user.info.invalid";
+        return "user.protected_password.missing";
     }
 
     @Override

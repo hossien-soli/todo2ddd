@@ -1,8 +1,8 @@
-package dev.hspl.todo2ddd.user.application.exception;
+package dev.hspl.todo2ddd.user.domain.exception;
 
-import dev.hspl.todo2ddd.common.application.ApplicationException;
+import dev.hspl.todo2ddd.common.domain.exception.DomainException;
 
-public class UnacceptableAdminFullNameException extends ApplicationException {
+public class UnacceptableAdminFullNameException extends DomainException {
     public UnacceptableAdminFullNameException() {
         super("The full name is unacceptable. It must be between 5 and 40 characters long.");
     }

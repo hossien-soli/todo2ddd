@@ -2,14 +2,14 @@ package dev.hspl.todo2ddd.user.domain.exception;
 
 import dev.hspl.todo2ddd.common.domain.exception.DomainException;
 
-public class InvalidUserInfoException extends DomainException {
-    public InvalidUserInfoException() {
-        super("The username and hashed password of the user are not provided correctly.");
+public class UsernameAlreadyInUseException extends DomainException {
+    public UsernameAlreadyInUseException() {
+        super("The username is already in use.");
     }
 
     @Override
     public String problemKey() {
-        return "user.info.invalid";
+        return "user.username.in_use";
     }
 
     @Override

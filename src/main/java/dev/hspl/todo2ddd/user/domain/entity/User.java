@@ -1,29 +1,32 @@
-package dev.hspl.todo2ddd.user.application;
+package dev.hspl.todo2ddd.user.domain.entity;
 
+import dev.hspl.todo2ddd.common.domain.DomainAggregateRoot;
+import dev.hspl.todo2ddd.common.domain.event.ClientRegisteredEvent;
 import dev.hspl.todo2ddd.common.domain.value.UniversalUser;
+import dev.hspl.todo2ddd.common.domain.value.UserId;
 import dev.hspl.todo2ddd.common.domain.value.UserRole;
 import dev.hspl.todo2ddd.common.domain.value.Username;
-import dev.hspl.todo2ddd.user.application.exception.InvalidUserInfoException;
-import dev.hspl.todo2ddd.user.application.exception.UnacceptableAdminFullNameException;
-import dev.hspl.todo2ddd.user.application.exception.UnacceptableClientFullNameException;
+import dev.hspl.todo2ddd.user.domain.exception.InvalidUserInfoException;
+import dev.hspl.todo2ddd.user.domain.exception.UnacceptableAdminFullNameException;
+import dev.hspl.todo2ddd.user.domain.exception.UnacceptableClientFullNameException;
+import dev.hspl.todo2ddd.user.domain.value.ProtectedPassword;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class User implements UniversalUser {
-    private UUID id;
+public class User extends DomainAggregateRoot implements UniversalUser {
+    private UserId id;
 
     private String fullName;
 
     private Username username;
-    private String hashedPassword;
+    private ProtectedPassword protectedPassword;
 
     private boolean banned;
     private LocalDateTime registeredAt;
@@ -34,45 +37,63 @@ public class User implements UniversalUser {
 
     private Integer version; // null=entity/model/record is NEW! | null=insert / not-null=update
 
-    public static User newClient(String fullName, Username username, String hashedPassword) {
+    public static User newClient(
+            LocalDateTime currentDateTime,
+            UserId newUserId,
+            String fullName,
+            Username username,
+            ProtectedPassword protectedPassword
+    ) {
         boolean validateFullName = fullName != null && fullName.length() >= 5 && fullName.length() <= 30;
         if (!validateFullName) {
             throw new UnacceptableClientFullNameException();
         }
 
-        boolean validateOtherUserInfo = username != null && hashedPassword != null && hashedPassword.length() == 60;
+        boolean validateOtherUserInfo = currentDateTime != null && newUserId != null &&
+                username != null && protectedPassword != null;
         if (!validateOtherUserInfo) {
             throw new InvalidUserInfoException();
         }
 
-        return new User(UUID.randomUUID(), fullName, username, hashedPassword, false,
-                LocalDateTime.now(), UserRole.CLIENT, 0, null);
+        User user = new User(newUserId, fullName, username, protectedPassword, false,
+                currentDateTime, UserRole.CLIENT, 0, null);
+
+        user.registerDomainEvent(new ClientRegisteredEvent(currentDateTime,newUserId,fullName,username));
+
+        return user;
     }
 
-    public static User existingUser(UUID id, String fullName, Username username, String hashedPassword,
-                                    boolean banned, LocalDateTime registeredAt, UserRole role, int numberOfTodo,
-                                    Integer version) {
-        // TODO: add validation
-        return new User(id, fullName, username, hashedPassword, banned, registeredAt, role, numberOfTodo, version);
-    }
-
-    public static User newAdmin(String fullName, Username username, String hashedPassword) {
+    public static User newAdmin(
+            LocalDateTime currentDateTime,
+            UserId newUserId,
+            String fullName,
+            Username username,
+            ProtectedPassword protectedPassword
+    ) {
         boolean validateFullName = fullName != null && fullName.length() >= 5 && fullName.length() <= 40;
         if (!validateFullName) {
             throw new UnacceptableAdminFullNameException();
         }
 
-        boolean validateOtherUserInfo = username != null && hashedPassword != null && hashedPassword.length() == 60;
+        boolean validateOtherUserInfo = currentDateTime != null && newUserId != null &&
+                username != null && protectedPassword != null;
         if (!validateOtherUserInfo) {
             throw new InvalidUserInfoException();
         }
 
-        return new User(UUID.randomUUID(), fullName, username, hashedPassword, false,
-                LocalDateTime.now(), UserRole.ADMIN, 0, null);
+        return new User(newUserId, fullName, username, protectedPassword, false,
+                currentDateTime, UserRole.ADMIN, 0, null);
+    }
+
+    public static User existingUser(UserId id, String fullName, Username username, ProtectedPassword protectedPassword,
+                                    boolean banned, LocalDateTime registeredAt, UserRole role, int numberOfTodo,
+                                    Integer version) {
+        // TODO: add validation
+        return new User(id, fullName, username, protectedPassword, banned, registeredAt, role, numberOfTodo, version);
     }
 
     @Override
-    public UUID universalUserId() {
+    public UserId universalUserId() {
         return id;
     }
 

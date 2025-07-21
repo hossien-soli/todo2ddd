@@ -14,4 +14,7 @@ public interface UserJPARepository extends JpaRepository<UserJPAEntity, UUID> {
             @Param("username") String username,
             @Param("roleToMatch") UserRole roleToMatch
     );
+
+    boolean existsByUsername(String username);
+    // TODO: maybe we can optimize the query of this method (index only scan for username column)
 }
