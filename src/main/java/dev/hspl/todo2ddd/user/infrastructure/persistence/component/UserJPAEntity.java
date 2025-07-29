@@ -38,9 +38,6 @@ public class UserJPAEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @Column(nullable = false,name = "todo_count")
-    private int numberOfTodo;
-
     @Column(nullable = true,name = "version")
     @Version
     private Integer version;

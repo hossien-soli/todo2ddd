@@ -12,7 +12,7 @@ public interface UserRepository {
     // we can use the role field for storing different roles in different ways/locations/tables
 
     boolean existsByUsername(Username username, UserRole userRole);
-    // if we store all type of users in one table, and we have an index on username column in that table we shouldn't apply userRole match(just filter by username)
+    // if we store all type of users in one table, and we have a unique index on username column in that table we shouldn't apply userRole match(just filter by username)
 
     Optional<User> findByUsername(Username username, UserRole userRole);
     // role is useful we want to store different roles in different locations/tables

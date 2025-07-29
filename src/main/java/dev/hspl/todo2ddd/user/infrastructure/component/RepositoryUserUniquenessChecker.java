@@ -1,4 +1,4 @@
-package dev.hspl.todo2ddd.user.application.init;
+package dev.hspl.todo2ddd.user.infrastructure.component;
 
 import dev.hspl.todo2ddd.common.domain.value.UserRole;
 import dev.hspl.todo2ddd.common.domain.value.Username;

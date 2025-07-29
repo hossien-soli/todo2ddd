@@ -23,7 +23,5 @@ create table users
 
     role UserRole not null,
 
-    todo_count int not null,
-
     version int null
 );

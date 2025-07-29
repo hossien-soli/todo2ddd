@@ -13,12 +13,13 @@ import dev.hspl.todo2ddd.user.domain.value.ProtectedPassword;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+// domain entities should not have direct setters for their fields
+// we should encapsulate entity state by using domain friendly mutator methods
+
 @Getter
-@Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User extends DomainAggregateRoot implements UniversalUser {
     private UserId id;
@@ -32,8 +33,6 @@ public class User extends DomainAggregateRoot implements UniversalUser {
     private LocalDateTime registeredAt;
 
     private UserRole role;
-
-    private int numberOfTodo;
 
     private Integer version; // null=entity/model/record is NEW! | null=insert / not-null=update
 
@@ -56,9 +55,9 @@ public class User extends DomainAggregateRoot implements UniversalUser {
         }
 
         User user = new User(newUserId, fullName, username, protectedPassword, false,
-                currentDateTime, UserRole.CLIENT, 0, null);
+                currentDateTime, UserRole.CLIENT, null);
 
-        user.registerDomainEvent(new ClientRegisteredEvent(currentDateTime,newUserId,fullName,username));
+        user.registerDomainEvent(new ClientRegisteredEvent(currentDateTime, newUserId, fullName, username));
 
         return user;
     }
@@ -82,14 +81,13 @@ public class User extends DomainAggregateRoot implements UniversalUser {
         }
 
         return new User(newUserId, fullName, username, protectedPassword, false,
-                currentDateTime, UserRole.ADMIN, 0, null);
+                currentDateTime, UserRole.ADMIN, null);
     }
 
     public static User existingUser(UserId id, String fullName, Username username, ProtectedPassword protectedPassword,
-                                    boolean banned, LocalDateTime registeredAt, UserRole role, int numberOfTodo,
-                                    Integer version) {
+                                    boolean banned, LocalDateTime registeredAt, UserRole role, Integer version) {
         // TODO: add validation
-        return new User(id, fullName, username, protectedPassword, banned, registeredAt, role, numberOfTodo, version);
+        return new User(id, fullName, username, protectedPassword, banned, registeredAt, role, version);
     }
 
     @Override

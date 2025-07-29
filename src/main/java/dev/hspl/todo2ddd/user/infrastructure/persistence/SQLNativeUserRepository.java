@@ -24,14 +24,13 @@ public class SQLNativeUserRepository implements UserRepository {
         if (isNew) { // insert
             String sql = """
                     INSERT INTO users (id, full_name, username, password, banned, registered_at, role, todo_count, version) \
-                    VALUES (:id, :fullName, :username, :password, :banned, :registeredAt, :role, :todoCount, :version)\
+                    VALUES (:id, :fullName, :username, :password, :banned, :registeredAt, :role, :version)\
                     """;
 
             jdbcClient.sql(sql).param("id",user.getId().value()).param("fullName",user.getFullName())
                     .param("username",user.getUsername().value()).param("password",user.getProtectedPassword().value())
                     .param("banned",user.isBanned()).param("registeredAt",user.getRegisteredAt())
-                    .param("role",user.getRole()).param("todoCount",user.getNumberOfTodo())
-                    .param("version",1)
+                    .param("role",user.getRole()).param("version",1)
                     .update();
         } else { // update
 

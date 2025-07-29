@@ -4,6 +4,8 @@ import dev.hspl.todo2ddd.common.application.InvalidApplicationCommandException;
 import dev.hspl.todo2ddd.common.domain.value.Username;
 import dev.hspl.todo2ddd.user.domain.value.PlainPassword;
 
+// all fields are required
+
 public record ClientRegistrationCommand(
         String fullName,
         Username username,
