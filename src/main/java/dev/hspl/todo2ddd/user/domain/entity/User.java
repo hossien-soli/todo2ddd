@@ -91,6 +91,11 @@ public class User extends DomainAggregateRoot implements UniversalUser {
     }
 
     @Override
+    public Object aggregateRootId() {
+        return id;
+    }
+
+    @Override
     public UserId universalUserId() {
         return id;
     }

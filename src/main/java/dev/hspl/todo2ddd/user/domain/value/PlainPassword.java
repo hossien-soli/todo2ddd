@@ -10,5 +10,10 @@ public record PlainPassword(String value) {
             throw new UnacceptablePlainPasswordException();
         }
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }
 

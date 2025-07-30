@@ -11,4 +11,9 @@ public record ProtectedPassword(String value) {
             throw new MissingProtectedPasswordException();
         }
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

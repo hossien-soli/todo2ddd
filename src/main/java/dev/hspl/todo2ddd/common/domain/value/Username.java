@@ -20,5 +20,10 @@ public record Username(String value) {
 
         value = value.toLowerCase();
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }
 

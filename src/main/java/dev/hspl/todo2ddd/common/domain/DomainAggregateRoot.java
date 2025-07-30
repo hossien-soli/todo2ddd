@@ -23,4 +23,6 @@ public abstract class DomainAggregateRoot {
     public void clearDomainEvents() {
         this.domainEvents.clear();
     }
+
+    public abstract Object aggregateRootId();
 }

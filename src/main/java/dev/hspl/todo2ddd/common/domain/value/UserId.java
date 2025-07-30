@@ -10,4 +10,9 @@ public record UserId(UUID value) {
             throw new MissingUserIdException();
         }
     }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

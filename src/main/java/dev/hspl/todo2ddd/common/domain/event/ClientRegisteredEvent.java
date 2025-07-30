@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @ToString
-public class ClientRegisteredEvent implements DomainEvent {
+public class ClientRegisteredEvent extends DomainEvent {
     private final LocalDateTime currentDateTime;
 
     @Getter
@@ -27,5 +27,10 @@ public class ClientRegisteredEvent implements DomainEvent {
     @Override
     public LocalDateTime eventOccurredAt() {
         return currentDateTime;
+    }
+
+    @Override
+    public boolean statistical() {
+        return true;
     }
 }
