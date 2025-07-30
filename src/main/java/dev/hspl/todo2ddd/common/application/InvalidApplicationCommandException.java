@@ -1,6 +1,6 @@
 package dev.hspl.todo2ddd.common.application;
 
-public class InvalidApplicationCommandException extends ApplicationException {
+public class InvalidApplicationCommandException extends ApplicationUserException {
     public InvalidApplicationCommandException(String message) {
         super(message);
     }

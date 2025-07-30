@@ -1,7 +1,7 @@
 package dev.hspl.todo2ddd.admin.application;
 
-import dev.hspl.todo2ddd.common.application.EntityVersionMismatchException;
+// statistics events are immutable never try to update them in the database(save method always executes and insert!)
 
 public interface StatisticsEventRepository {
-    void save(StatisticsEvent event) throws EntityVersionMismatchException;
+    void save(StatisticsEvent event);
 }

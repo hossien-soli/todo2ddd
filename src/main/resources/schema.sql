@@ -3,6 +3,7 @@ drop type if exists UserRole;
 drop domain if exists UserUsername;
 drop domain if exists BCryptHashResult;
 drop table if exists users;
+drop table if exists statistics_event;
 
 create type UserRole as enum('CLIENT','ADMIN');
 create domain UserUsername as varchar(30);
@@ -24,4 +25,13 @@ create table users
     role UserRole not null,
 
     version int null
+);
+
+create table statistics_event
+(
+    id UUID primary key,
+    event_name varchar(50) not null,
+    entity_name varchar(50) null,
+    entity_id varchar(100) null,
+    occurred_at timestamp not null
 );

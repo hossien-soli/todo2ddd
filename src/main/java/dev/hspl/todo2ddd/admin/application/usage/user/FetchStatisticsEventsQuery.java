@@ -1,4 +1,4 @@
-package dev.hspl.todo2ddd.admin.application.usage.user.query;
+package dev.hspl.todo2ddd.admin.application.usage.user;
 
 public record FetchStatisticsEventsQuery() {
 }

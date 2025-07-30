@@ -1,0 +1,2 @@
+For modules with simple business logic, we can omit the domain layer.
+But the principles of Onion Architecture and Dependency Inversion are always present.
