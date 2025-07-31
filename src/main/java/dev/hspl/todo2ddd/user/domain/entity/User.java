@@ -2,13 +2,14 @@ package dev.hspl.todo2ddd.user.domain.entity;
 
 import dev.hspl.todo2ddd.common.domain.DomainAggregateRoot;
 import dev.hspl.todo2ddd.common.domain.event.ClientRegisteredEvent;
+import dev.hspl.todo2ddd.common.domain.event.UserLoggedInEvent;
 import dev.hspl.todo2ddd.common.domain.value.UniversalUser;
 import dev.hspl.todo2ddd.common.domain.value.UserId;
 import dev.hspl.todo2ddd.common.domain.value.UserRole;
 import dev.hspl.todo2ddd.common.domain.value.Username;
-import dev.hspl.todo2ddd.user.domain.exception.InvalidUserInfoException;
-import dev.hspl.todo2ddd.user.domain.exception.UnacceptableAdminFullNameException;
-import dev.hspl.todo2ddd.user.domain.exception.UnacceptableClientFullNameException;
+import dev.hspl.todo2ddd.user.domain.exception.*;
+import dev.hspl.todo2ddd.user.domain.service.PasswordProtector;
+import dev.hspl.todo2ddd.user.domain.value.PlainPassword;
 import dev.hspl.todo2ddd.user.domain.value.ProtectedPassword;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -92,6 +93,23 @@ public class User extends DomainAggregateRoot implements UniversalUser {
                                     UserRole role, int points, Integer version) {
         // TODO: add validation
         return new User(id, fullName, username, protectedPassword, banned, registeredAt, role, points, version);
+    }
+
+    public void login(
+            LocalDateTime currentDateTime,
+            PlainPassword password,
+            PasswordProtector passwordProtector
+    ) {
+        if (!passwordProtector.matches(password,this.protectedPassword)) {
+            throw new PasswordMismatchLoginException(this.username, this.role);
+        }
+
+        // prevent banned admins from logging in(banned clients can log in but can't perform any action!!)
+        if (this.role.equals(UserRole.ADMIN) && this.banned) {
+            throw new AccountBannedLoginException();
+        }
+
+        registerDomainEvent(new UserLoggedInEvent(currentDateTime,this.role,this.id,this.username));
     }
 
     @Override

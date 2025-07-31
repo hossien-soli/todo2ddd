@@ -4,8 +4,7 @@ import dev.hspl.todo2ddd.common.domain.value.UserId;
 import dev.hspl.todo2ddd.common.domain.value.UserRole;
 import dev.hspl.todo2ddd.common.domain.value.Username;
 import dev.hspl.todo2ddd.user.domain.entity.User;
-import dev.hspl.todo2ddd.user.domain.exception.PasswordConfirmationFailedException;
-import dev.hspl.todo2ddd.user.domain.exception.UsernameAlreadyInUseException;
+import dev.hspl.todo2ddd.user.domain.exception.*;
 import dev.hspl.todo2ddd.user.domain.value.PlainPassword;
 import lombok.RequiredArgsConstructor;
 
