@@ -34,6 +34,9 @@ public class User extends DomainAggregateRoot implements UniversalUser {
 
     private UserRole role;
 
+    private int points;
+    // each _todo creation give user a 2 point and other _todo operation give it 1 point
+
     private Integer version; // null=entity/model/record is NEW! | null=insert / not-null=update
 
     public static User newClient(
@@ -55,7 +58,7 @@ public class User extends DomainAggregateRoot implements UniversalUser {
         }
 
         User user = new User(newUserId, fullName, username, protectedPassword, false,
-                currentDateTime, UserRole.CLIENT, null);
+                currentDateTime, UserRole.CLIENT, 5, null);
 
         user.registerDomainEvent(new ClientRegisteredEvent(currentDateTime, newUserId, fullName, username));
 
@@ -81,13 +84,14 @@ public class User extends DomainAggregateRoot implements UniversalUser {
         }
 
         return new User(newUserId, fullName, username, protectedPassword, false,
-                currentDateTime, UserRole.ADMIN, null);
+                currentDateTime, UserRole.ADMIN, 0, null);
     }
 
     public static User existingUser(UserId id, String fullName, Username username, ProtectedPassword protectedPassword,
-                                    boolean banned, LocalDateTime registeredAt, UserRole role, Integer version) {
+                                    boolean banned, LocalDateTime registeredAt,
+                                    UserRole role, int points, Integer version) {
         // TODO: add validation
-        return new User(id, fullName, username, protectedPassword, banned, registeredAt, role, version);
+        return new User(id, fullName, username, protectedPassword, banned, registeredAt, role, points, version);
     }
 
     @Override

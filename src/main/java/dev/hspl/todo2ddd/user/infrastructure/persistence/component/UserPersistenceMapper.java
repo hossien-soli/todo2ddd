@@ -20,6 +20,7 @@ public class UserPersistenceMapper {
                 .banned(user.isBanned())
                 .registeredAt(user.getRegisteredAt())
                 .role(user.getRole())
+                .points(user.getPoints())
                 .version(user.getVersion())
                 .build();
     }
@@ -32,6 +33,6 @@ public class UserPersistenceMapper {
                 new Username(jpaEntity.getUsername()),
                 new ProtectedPassword(jpaEntity.getHashedPassword()),
                 jpaEntity.isBanned(), jpaEntity.getRegisteredAt(),
-                jpaEntity.getRole(), jpaEntity.getVersion());
+                jpaEntity.getRole(), jpaEntity.getPoints(), jpaEntity.getVersion());
     }
 }

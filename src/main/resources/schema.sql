@@ -24,6 +24,8 @@ create table users
 
     role UserRole not null,
 
+    points int not null,
+
     version int null
 );
 

@@ -16,29 +16,32 @@ import java.util.UUID;
 @Builder
 public class UserJPAEntity {
     @Id
-    @Column(nullable = false,name = "id",updatable = false,columnDefinition = "UUID")
+    @Column(nullable = false, name = "id", updatable = false, columnDefinition = "UUID")
     private UUID id;
 
-    @Column(nullable = false,name = "full_name",length = 40)
+    @Column(nullable = false, name = "full_name", length = 40)
     private String fullName;
 
-    @Column(nullable = false,name = "username",length = 30,unique = true)
+    @Column(nullable = false, name = "username", length = 30, unique = true)
     private String username;
 
-    @Column(nullable = false,name = "password")
+    @Column(nullable = false, name = "password")
     private String hashedPassword;
 
-    @Column(nullable = false,name = "banned")
+    @Column(nullable = false, name = "banned")
     private boolean banned;
 
-    @Column(nullable = false,name = "registered_at",updatable = false)
+    @Column(nullable = false, name = "registered_at", updatable = false)
     private LocalDateTime registeredAt;
 
-    @Column(nullable = false,name = "role")
+    @Column(nullable = false, name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @Column(nullable = true,name = "version")
+    @Column(nullable = false, name = "points")
+    private int points = 0;
+
+    @Column(nullable = true, name = "version")
     @Version
     private Integer version;
 }
