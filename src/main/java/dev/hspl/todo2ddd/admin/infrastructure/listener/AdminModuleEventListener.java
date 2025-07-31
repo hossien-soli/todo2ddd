@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+// This implementation of the event listener does not provide strong consistency (some events may be lost).
+
 @Component
 @RequiredArgsConstructor
 public class AdminModuleEventListener {
