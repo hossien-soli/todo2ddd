@@ -8,8 +8,11 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 // StatisticsEvent = Some important domain-events that triggered by users stored for business analytics purposes.
+// These events are a type of time-series data that can be analyzed by date and time.
+// Better to store them in a time-series data aware database
 // Statistics events are immutable
 // Statistics events don't need id or primary key(storage efficiency)
+// In time-series data the primary key is usually the creation-time of event or record(eventOccurredAt in this case)
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
